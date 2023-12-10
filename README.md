@@ -1,7 +1,8 @@
-
 # Nth Store - NeustackApp
 
 Problem Statement - https://github.com/neustackapp/assignment
+
+N is set as 3. You can change value of N from src/db/db.js
 
 ## Run Locally
 
@@ -35,10 +36,8 @@ Open the browser & visit following link-
   http://localhost:3000/
 ```
 
-
 ## Tech Stack
 
 **Client:** EJS Rendering from Server itself
 
 **Server:** NodeJs, ExpressJs
-
