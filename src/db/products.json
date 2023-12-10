@@ -1,0 +1,17 @@
+[
+  {
+    "id": "123",
+    "name": "IPhone 20 Pro Max",
+    "price": 10000
+  },
+  {
+    "id": "456",
+    "name": "Sony Bravia tv Oled",
+    "price": 25000
+  },
+  {
+    "id": "789",
+    "name": "OGeneral Air Cond",
+    "price": 50000
+  }
+]

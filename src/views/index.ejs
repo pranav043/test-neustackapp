@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/styles.css" rel="stylesheet" type="text/css">
+    <title>Test Store</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome to the Nth Discount Store</h1>
+    </header>
+
+    <nav>
+        <div class="welcome"></div>
+        <div class="user-info">
+            <p>Welcome: <%= user_id %>
+            </p>
+        </div>
+    </nav>
+
+    <main>
+        <div class="right">
+            <div class="products">
+                <h2>Buy Products</h2>
+                <ul>
+                    <% products.forEach(product=> { %>
+                        <li>
+                            <strong>
+                                <%= product.name %>
+                            </strong> $<%= product.price %>
+                                <button onclick="addProductToCart('<%= product.id %>')">Add to Cart</button>
+                        </li>
+                        <% }); %>
+                </ul>
+            </div>
+
+            <div class="admin">
+                <h2>Secret Admin Stats</h2>
+                <p>Items Purchased till now: <span id="item-count"></span></p>
+                <p>Total Purchase Amount: $<span id="total-purchase-amount"></span></p>
+                <p>Discount Codes utilized: <span id="discount-codes"></span></p>
+                <p>Total Discount Amount: $<span id="total-discount-amount"></span></p>
+            </div>
+        </div>
+        <div class="cart">
+            <h2>Cart</h2>
+            <ul id="cart-list"></ul>
+            <p><b>Discount Code: </b><span id="discount-code"></span></p>
+            <button onclick="checkout()">Checkout</button>
+        </div>
+    </main>
+
+    <script>
+        const apiUrl = 'http://localhost:3000';
+        const user_id = 'admin@test.com';
+        let cart = [];
+
+        async function addProductToCart(productId) {
+            try {
+                const response = await fetch(`${apiUrl}/api/cart/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_id, item_id: productId }),
+                });
+
+                const data = await response.json();
+                getCartStatus();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function checkout() {
+            try {
+                const response = await fetch(`${apiUrl}/api/cart/checkout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_id }),
+                });
+
+                const data = await response.json();
+
+                if (data.message) {
+                    if (data.discountCode) {
+                        alert(data.message + ' for ' + data.cart.length + ' items with Discount Code: ' + data.discountCode)
+                    }
+                    else {
+                        alert(data.message + ' for ' + data.cart.length + ' items')
+                    }
+                }
+                else if (data.error) {
+                    alert(data.error)
+                }
+
+                getAdminStats();
+                getCartStatus();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getCartStatus() {
+            try {
+                const response = await fetch(`${apiUrl}/api/cart/status?user_id=${user_id}`);
+                const data = await response.json();
+
+                const sanitizedCart = data.cart.filter(item => item.name && item.price);
+
+                cart = sanitizedCart || [];
+                renderCartStatus(data.discountCode);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function renderCartStatus(discountCode) {
+            const cartList = document.querySelector('#cart-list');
+            const discountCodeElement = document.querySelector('#discount-code');
+
+            if (cartList && discountCodeElement) {
+                const cartItems = cart.map(item => `<li>${item.name} - $${item.price}</li>`).join('');
+                cartList.innerHTML = `<ul>${cartItems}</ul>`;
+
+                discountCodeElement.innerText = discountCode || 'Keep Buying to get code!!!';
+            }
+        }
+        async function getAdminStats() {
+            try {
+                const response = await fetch(`${apiUrl}/api/admin/stats`);
+                const data = await response.json();
+
+                document.getElementById('item-count').innerText = data.itemCount;
+                document.getElementById('total-purchase-amount').innerText = data.totalPurchaseAmount.toFixed(2);
+                document.getElementById('discount-codes').innerText = data.discountCodes.join(', ');
+                document.getElementById('total-discount-amount').innerText = data.totalDiscountAmount.toFixed(2);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        getAdminStats();
+        getCartStatus();
+    </script>
+</body>
+
+</html>

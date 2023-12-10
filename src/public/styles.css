@@ -1,0 +1,160 @@
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+}
+
+nav {
+  background-color: #444;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  margin: 10px;
+}
+
+main {
+  display: flex;
+  flex: 1;
+}
+
+.right {
+  flex: 2.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.cart {
+  flex: 1;
+  padding: 20px;
+}
+
+.cart h2 {
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.cart ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.cart li {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart li button {
+  background-color: #e44d26;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cart li button:hover {
+  background-color: #c5371d;
+}
+
+.cart p {
+  margin: 10px 0;
+}
+
+.cart button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cart button:hover {
+  background-color: #45a049;
+}
+
+.right-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.products {
+  flex: 1;
+}
+
+.products h2 {
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  padding-left: 20px;
+}
+
+.products ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.products li {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 80%;
+}
+
+.products li strong {
+  margin-bottom: 10px;
+}
+
+.products li button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.products li button:hover {
+  background-color: #45a049;
+}
+
+.admin {
+  flex: 1;
+  padding: 20px;
+}
+
+.admin h2 {
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.admin p {
+  margin: 10px 0;
+}
